@@ -14,3 +14,4 @@
 
 ## rodar o docker para ler o Dockerfile e realizar a criação
 - docker build .
+- sudo docker compose build
