@@ -13,5 +13,8 @@
 -- https://hub.docker.com/
 
 ## rodar o docker para ler o Dockerfile e realizar a criação
-- docker build .
+- sudo docker build .
 - sudo docker compose build
+
+## flake8
+- sudo docker compose run --rm app sh -c "flake8"
