@@ -13,12 +13,13 @@
 -- https://hub.docker.com/
 
 ## rodar o docker para ler o Dockerfile e realizar a criação
-- sudo docker build .
-- sudo docker compose build
+- docker build .
+- docker compose build
 - sudo docker compose run --rm app sh -c  "django-admin startproject app ."
-- sudo docker compose up
+- docker compose up
 ## flake8
-- sudo docker compose run --rm app sh -c "flake8"
+- docker compose run --rm app sh -c "flake8"
 
 ## Test
-- sudo docker compose run --rm app sh -c "python manage.py test"
+- docker compose run --rm app sh -c "python manage.py test"
+- docker compose run --rm app sh -c "python manage.py startapp core"
