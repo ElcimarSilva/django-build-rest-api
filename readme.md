@@ -19,7 +19,12 @@
 - docker compose up
 ## flake8
 - docker compose run --rm app sh -c "flake8"
-
+- docker compose run --rm app sh -c "python manage.py wait_for_db && flake8"
 ## Test
 - docker compose run --rm app sh -c "python manage.py test"
-- docker compose run --rm app sh -c "python manage.py startapp core"
+
+## Criação de novo app
+- docker compose run --rm app sh -c "python manage.py startapp example"
+
+## Chamar arquivo ou função especifica(exemplo)
+- docker compose run --rm app sh -c "python manage.py wait_for_db"
