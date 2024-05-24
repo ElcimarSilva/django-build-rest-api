@@ -28,3 +28,7 @@
 
 ## Chamar arquivo ou função especifica(exemplo)
 - docker compose run --rm app sh -c "python manage.py wait_for_db"
+
+## Migrations
+- python manage.py makemigrations
+- python manage.py migrate
