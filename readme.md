@@ -33,3 +33,8 @@
 - python manage.py makemigrations
 - python manage.py migrate
 - docker compose run --rm app sh -c "python manage.py makemigrations"
+
+# Create a superuser
+- docker compose run --rm app sh -c "python manage.py createsuperuser"
+- admin@example.com
+- 123
