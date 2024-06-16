@@ -43,3 +43,7 @@
 - após ter um usuario com email e senha
 - chamar endpoint de criação de token
 - após ter o token colocar em "authorize" no swagger conforme o exemplo "Token 637ef711224e200b3befdfd0477daeb8c477c00b"
+
+
+# Perguntas
+ - Diferenças entre APIview and viewsets
