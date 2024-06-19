@@ -2,7 +2,9 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+*.pyc
+urls.cpython-39.pyc
+settings.cpython-39.pyc
 # C extensions
 *.so
 
