@@ -6,6 +6,8 @@ from rest_framework import (
 )
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import status
 
 from core.models import (
      Recipe,
@@ -34,6 +36,12 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
          """Create a new recipe."""
          serializer.save(user=self.request.user)
+
+    def destroy(self, request, *args, **kwargs):
+        recipe = self.get_object()
+        if recipe.user != self.request.user:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        return super().destroy(request, *args, **kwargs)
 
 class TagViewSet(mixins.DestroyModelMixin,
                              mixins.UpdateModelMixin,
