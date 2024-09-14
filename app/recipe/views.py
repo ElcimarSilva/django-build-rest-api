@@ -99,10 +99,27 @@ class RecipeViewSet(viewsets.ModelViewSet):
             return Response(status=status.HTTP_404_NOT_FOUND)
         return super().destroy(request, *args, **kwargs)
 
-class TagViewSet(mixins.DestroyModelMixin,
-                             mixins.UpdateModelMixin,
-                             mixins.ListModelMixin,
-                             viewsets.GenericViewSet):
+@extend_schema_view(
+    list=extend_schema(
+        parameters = [
+            OpenApiParameter(
+                'assigned_only',
+                OpenApiTypes.INT, enum=[0, 1],
+                description='Filter by itens assigner to recipes.'
+
+            )
+        ]
+    )
+)
+class BaseRecipeAttrViewSet(mixins.DestroyModelMixin,
+                            mixins.UpdateModelMixin,
+                            mixins.ListModelMixin,
+                            viewsets.GenericViewSet):
+    """Base viewset for recipe attributes."""
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+class TagViewSet(BaseRecipeAttrViewSet):
      """Manage tags in the database."""
      serializer_class = serializers.TagSerializer
      queryset = Tag.objects.all()
@@ -111,12 +128,16 @@ class TagViewSet(mixins.DestroyModelMixin,
 
      def get_queryset(self):
           """Filter queryset to autheticated user."""
-          return self.queryset.filter(user=self.request.user).order_by('-name')
+          assigned_only = bool(
+              int(self.request.query_params.get('assigned_only', 0))
+          )
+          queryset = self.queryset
+          if assigned_only:
+              queryset = queryset.filter(recipe__isnull=False)
 
-class IngredientViewSet(mixins.DestroyModelMixin,
-                                        mixins.UpdateModelMixin,
-                                        mixins.ListModelMixin,
-                                        viewsets.GenericViewSet):
+          return queryset.filter(user=self.request.user).order_by('-name').distinct()
+
+class IngredientViewSet(BaseRecipeAttrViewSet):
      """Manage ingredients in the database."""
      serializer_class = serializers.IngredientSerializer
      queryset = Ingredient.objects.all()
