@@ -52,8 +52,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
         """Convert a list of strings to integers."""
         return [int(str_id) for str_id in qs.split(',')]
 
-    def query_set(self):
-        """Retrive recipes for authenticated user."""
+    def get_queryset(self):
+        """Retrieve recipes for authenticated user."""
         tags = self.request.query_params.get('tags')
         ingredients = self.request.query_params.get('ingredients')
         queryset = self.queryset
@@ -62,8 +62,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(tags__id__in=tag_ids)
         if ingredients:
             ingredient_ids = self._params_to_ints(ingredients)
-            for ingredient_id in ingredient_ids:
-                queryset = queryset.filter(ingredients__id=ingredient_id)
+            queryset = queryset.filter(ingredients__id__in=ingredient_ids)
 
 
         return queryset.filter(user=self.request.user).order_by('-id').distinct()
@@ -137,13 +136,20 @@ class TagViewSet(BaseRecipeAttrViewSet):
 
           return queryset.filter(user=self.request.user).order_by('-name').distinct()
 
-class IngredientViewSet(BaseRecipeAttrViewSet):
-     """Manage ingredients in the database."""
-     serializer_class = serializers.IngredientSerializer
-     queryset = Ingredient.objects.all()
-     authentication_classes= [TokenAuthentication]
-     permission_classes = [IsAuthenticated]
+class IngredientViewSet(viewsets.ModelViewSet):
+    """View for managing ingredient APIs."""
+    serializer_class = serializers.IngredientSerializer
+    queryset = Ingredient.objects.all()
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
-     def get_queryset(self):
-          """Filter queryset to autheticated user."""
-          return self.queryset.filter(user=self.request.user).order_by('-name')
+    def get_queryset(self):
+        """Retrieve ingredients for the authenticated user."""
+        queryset = self.queryset.filter(user=self.request.user)
+
+        # Filtrar apenas ingredientes associados a receitas se 'assigned_only' for passado
+        assigned_only = bool(int(self.request.query_params.get('assigned_only', 0)))
+        if assigned_only:
+            queryset = queryset.filter(recipe__isnull=False)
+
+        return queryset.order_by('-name').distinct()
