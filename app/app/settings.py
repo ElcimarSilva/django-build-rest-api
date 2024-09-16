@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'changeme')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True #bool(int(os.environ.get('DEBUG', 0))) # fix CSS bug
+DEBUG = bool(int(os.environ.get('DEBUG', 0))) # fix CSS bug
 
 ALLOWED_HOSTS = ['localhost', '0.0.0.0']
 ALLOWED_HOSTS.extend(
