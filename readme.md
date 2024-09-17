@@ -17,6 +17,7 @@
 - docker compose build
 - sudo docker compose run --rm app sh -c  "django-admin startproject app ."
 - docker compose up
+- docker-compose -f docker-compose-deploy.yml up
 ## flake8
 - docker compose run --rm app sh -c "flake8"
 - docker compose run --rm app sh -c "python manage.py wait_for_db && flake8"
