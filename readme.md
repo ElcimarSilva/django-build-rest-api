@@ -48,3 +48,9 @@
 
 # Perguntas
  - Diferenças entre APIview and viewsets
+
+
+#TODO: verificar conta na aws free tier não esta mais disponivel
+#TODO: verificar actions que estão rodando no git e quebrando os testes
+#TODO: verificar porque não consegui abrir a URL quando executo o comando docker-compose -f docker-compose-deploy.yml up
+#TODO: realizar mais testes na api criada e explorar mais e como modificala para outros casos
