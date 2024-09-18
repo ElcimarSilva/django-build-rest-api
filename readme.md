@@ -8,17 +8,17 @@
 - Docker
 - Github
 
-## configs
+## Configs
 - criado um access token no docker hub e inserido como secret do projeto no github
 -- https://hub.docker.com/
 
-## rodar o docker para ler o Dockerfile e realizar a criação
+## Codar o docker para ler o Dockerfile e realizar a criação
 - docker build .
 - docker compose build
 - sudo docker compose run --rm app sh -c  "django-admin startproject app ."
 - docker compose up
 - docker-compose -f docker-compose-deploy.yml up
-## flake8
+## Flake8
 - docker compose run --rm app sh -c "flake8"
 - docker compose run --rm app sh -c "python manage.py wait_for_db && flake8"
 ## Test
