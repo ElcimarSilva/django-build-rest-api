@@ -23,6 +23,8 @@ services:
       - DEBUG=1
     depends_on:
       - db
+    networks:
+      - prometheus
 
   db:
     image: postgres:13-alpine
@@ -34,6 +36,14 @@ services:
       - POSTGRES_DB=devdb
     ports:
       - 5432:5432
+    networks:
+      - prometheus
+
 volumes:
   dev-db-data:
   dev-static-data:
+
+networks:
+  prometheus:
+    name: prometheus
+    external: true
