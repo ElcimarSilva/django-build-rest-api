@@ -54,3 +54,10 @@
 #TODO: verificar actions que estão rodando no git e quebrando os testes
 #TODO: verificar porque não consegui abrir a URL quando executo o comando docker-compose -f docker-compose-deploy.yml up
 #TODO: realizar mais testes na api criada e explorar mais e como modificala para outros casos
+
+metricas de api:
+- requisições por segundo
+- tempo de reposta
+- usuarios online
+- taxa de erros
+- total de requests
